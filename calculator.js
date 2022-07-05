@@ -83,11 +83,35 @@ class Calculator {
   }
 }
 
+class Note {
+  constructor(displayNote) {
+    this.displayNote = displayNote;
+    this.clearNote();
+  }
+  clearNote() {
+    this.displayNote = "";
+  }
+  addNote(event) {
+    const noteDiv = document.createElement("div");
+    noteDiv.classList.add("note");
+
+    const newNote = document.createElement("li");
+    newNote.innerText = displayNote.value;
+    newNote.classList.add("note-item");
+    noteDiv.appendChild(newNote);
+
+    noteList.appendChild(noteDiv);
+  }
+}
+
 const numberButtons = document.querySelectorAll("[data-number]");
 const operationButtons = document.querySelectorAll("[data-operation]");
 const equalsButton = document.querySelector("[data-equals]");
 const deleteButton = document.querySelector("[data-delete]");
 const allClearButton = document.querySelector("[data-all-clear]");
+const displayNote = document.querySelector("[data-note-display]");
+const noteButton = document.querySelector("[data-note-button]");
+const noteList = document.querySelector("[data-note-list]");
 const previousOperandTextElement = document.querySelector(
   "[data-previous-operand]"
 );
@@ -100,6 +124,7 @@ const calculator = new Calculator(
   currentOperandTextElement
 );
 
+const note = new Note(displayNote);
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
     calculator.appendNumber(button.innerText);
@@ -124,4 +149,7 @@ allClearButton.addEventListener("click", (button) => {
 deleteButton.addEventListener("click", (button) => {
   calculator.delete();
   calculator.updateDisplay();
+});
+noteButton.addEventListener("click", (button) => {
+  note.addNote();
 });
